@@ -1,2 +1,4 @@
-# EECS690-Black-Box
-Black box project for KU EECS 690
+Black Box Oven Controller
+=========================
+
+For KU EECS 690
