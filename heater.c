@@ -3,8 +3,11 @@
 #include PID .h file 
 
 /********************************************//**
-*  Need to revise the GPIO port to which the power resistor is connected
-*  Assume that the system does not need to work at start point
+*  heater.c --> Module Title
+*  Module encharged of turning the Heater on
+*  Receives data from the adc converter
+*  Compares this data to the desired temperature
+*  Determines the time to turn the heater on
 ***********************************************/
 //Set GPIO to the power resistor of the heater
 //powerdrive=off
