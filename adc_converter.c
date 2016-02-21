@@ -1,27 +1,31 @@
-// Include stuff
+/**
+ * This module is for the analog digital converter
+ * This is for obtaining a temperature sample wave and
+ * convert the sample to a digital value.
+ * This is then calculated to a value that doesn't take
+ * into effect the resistance. 
+ * The analog digital converter will be attached to the TIVA Board
+ * due to the booster pack via GPIO Pins. 
+ */
+ 
+ /**
+  * Necessary libraries and .h files
+  */
 #include adc_converter.h
 include temperature_sensor_definitions 
 include board_libraries 
 include queues 
 
-/*
- * @ Santosh:
- * Is the ADC going to be a physical component? If so we'll need to
- * read from some number of pins, and generate a number from them.
- * Alternatively, is there an ADC on the Tiva boards? Looking back
- * at old labs we used an ADC "sequencer" but those were different
- * boards. The data sheet for the Tiva boards has analog GPIO pins
- * as part of the "BoosterPack"- I don't know if that means we'll be
- * able to use them or not.
- */
+
 
 /**
  *  Module to convert the analog input to degrees celsius.
- *  
+ *  Also used to convert digital to actual temperature depending
+ *  on resistance.
  */
 
 void ADC_TASK( void *pvParameters ) {
-    // @ Santosh: do we need a queue for this?
+    //! Utilization of queue due to activating ADC or not
     create queue my_queue;
     my_queue = setup_queue(parameters);
 
@@ -59,7 +63,9 @@ void ADC_TASK( void *pvParameters ) {
 
 	//! Save results to output
 	my_qeueue.send_data(data);
-
+    
+    //! Utilization of VTaskDelay() function for FREERTOS
+    //! software from TIVA Board
 	task_delay();
     }
 }

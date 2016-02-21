@@ -1,7 +1,6 @@
 // Include things
 //   modules:
 //     ADC converter
-//     Temperature converter
 //     PID controller
 //     Heater
 
