@@ -1,3 +1,11 @@
+#include adc_converter.h
+#include temperature_sensor_definitions 
+#include board_libraries 
+#include queues 
+
+
+
+
 //*****************************************************************************
 //! This module is for the analog digital converter
 //! This is for obtaining a temperature sample wave and
@@ -6,21 +14,13 @@
 //! into effect the resistance. 
 //! The analog digital converter will be attached to the TIVA Board
 //! due to the booster pack via GPIO Pins.
-//! \param 
-//! \param extern double v_temp   
-//! \param extern double dig_temp
-//! \param extern double conv_temp
-//! \param extern double set_temp
-//! \param extern double pid_out
-//*****************************************************************************
+//******************************************************************************
  
 //******************************************************************************
 //! Necessary libraries and .h files
 //******************************************************************************
-#include adc_converter.h
-include temperature_sensor_definitions 
-include board_libraries 
-include queues 
+
+
 
 
 
