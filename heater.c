@@ -15,6 +15,41 @@
 //! powerdrive=off
 //*****************************************************************************
  
+#include <math.h>
+
+static unsigned long temperatureconecc = 0;
+
+void convertTemperature(void *pvParameters){
+	//have to convert the temperature from ADC to a temperature value
+	//compare the measured temperature to desired temperature and get the change in power
+	//have the power driver control the current through resistor
+	//
+
+	//Declaring variables for Vishat Thermistor Resistance Formula
+	float d = -3.730535E+03;
+	float a = -14.6337;
+	float b = 4791.842;
+	float c = -115334;
+	float rref = 10000;
+
+	//tempval will be the converted value of the temperature
+	float tempval;
+	float workingtemp = tempval + 273.16 // as seen on the slides in the webpage
+
+	//From now this formula will work in Celsius
+	float resistanceval = rref * exp(a+(b/workingtemp) + (c/pow(workingtemp,2) + (d/pow(workingtemp,3))))
+
+	//will use desiredtemperature to calculate the power required to get to that temperature
+	float desiredtemperature
+
+	//need to calculate the difference in power to get to the desired temperature(check werbpage)
+	//after getting the power apply it
+	//will calculate resistance and use it to get a temporary voltage that will be applied on that cycle
+
+
+
+}
+ 
 void HeaterTask(void *pvParameters)
 {
     while(true)
