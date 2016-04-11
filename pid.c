@@ -44,7 +44,7 @@ void PIDTask(void *pvParameters)
       //     Proportional: Kp * error
       //     Integral: Ki * integral of error so far
       //     Derivative: Kd * rate of change of error
-    
+
       error = temp1-temp2; //(  error = Ts - Tc)
       while (error != 0)
       {
@@ -57,8 +57,9 @@ void PIDTask(void *pvParameters)
         //Perform trapezoidal using integral function
         integral = trapez_funct(Ki,error,count);
         control_variable += Ki * integral;
-        control_variable += Kd * (error - previous_error) / dt;
-        PID_trigger=Kp*error + Ki*error_2 + Kd*(error-prev_error);
+        control_variable += Kd * (error - previous_error) / dt;// what is dt?
+
+        //PID_trigger=Kp*error + Ki*error_2 + Kd*(error-prev_error);
         prev_error=error;
         count++;
       }
