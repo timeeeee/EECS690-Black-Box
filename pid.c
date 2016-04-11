@@ -1,5 +1,5 @@
 #include <math.h>
-
+#include <heater.h>
 declare static variables error, integral, previous_error;
 
 static unsigned long temp1;//temp variable to store the setpoint temp, Ts
@@ -57,7 +57,7 @@ void PIDTask(void *pvParameters)
         //Perform trapezoidal using integral function
         integral = trapez_funct(Ki,error,count);
         control_variable += Ki * integral;
-        control_variable += Kd * (error - previous_error) / dt;// what is dt?
+        control_variable += Kd * (error - previous_error);// what is dt?
 
         //PID_trigger=Kp*error + Ki*error_2 + Kd*(error-prev_error);
         prev_error=error;
