@@ -8,7 +8,7 @@ Giordanno Garcia, Santosh Charles, Warren Scipio, Diego Soliz, Tim Clark
 Global variables
 ----------------
 
-- (**v_temp**: measured temperature voltage- part of 
+- **v_temp**: measured temperature voltage
 - **dig_temp**: the digital representation of the voltage
 - **conv_temp**: the measured temperature in actual degrees (celsius?)
 - **set_temp**: the goal temperature
