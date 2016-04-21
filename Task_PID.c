@@ -11,14 +11,14 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/gpio.h"
-	 
+
 #include "FreeRTOS.h"
 #include "task.h"
+#include "queue.h"
 
 #include "Task_PID.h"
 
-// Get current and target temperature global variables
-extern float conv_temp;
+extern QueueHandle_t temp_qc;
 extern float set_temp;
 extern float OnTime_mS;
 
@@ -30,6 +30,7 @@ float kp = 1;
 float ki = 1;
 float kd = 1;
 
+float current_temp;
 float error;  // Most recent calculated error
 float prev_error = 0;  // Previous error
 float integral = 0;  // Sum of all error so far
@@ -47,7 +48,7 @@ float dt = 1;
 extern void Task_PID(void *pvParameters)
 {
   while (true) {
-    // PID will take as input current temperature (temp_conv) and target
+    // PID will take as input current temperature and target
     // temperature (temp_set).
     // It will output a control variable control_variable to drive a PWM
     // The output is the sum three parts, with coefficients for each:
@@ -55,7 +56,13 @@ extern void Task_PID(void *pvParameters)
     //     Integral: Ki * integral of error so far
     //     Derivative: Kd * rate of change of error
 
-    error = temp_set - temp_conv;
+    // Get current temp from queue and calculate error
+    error = 0;
+    if (temp_qc != 0) {
+      if (xQueueRecieve(temp_qc, &current_temp, (TickType_t) 10)) {
+	error = temp_set - current_temp;
+      }
+    }
 
     // Add proportional part
     pid_out = Kp * error;
