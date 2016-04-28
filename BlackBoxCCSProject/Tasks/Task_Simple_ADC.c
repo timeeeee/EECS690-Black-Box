@@ -36,27 +36,9 @@
 #include "Task_ReportData.h"
 
 #include "queue.h"
-#include "global.h"
-
-//
-//	Gloabal subroutines and variables
-//
-
-/*
-QueueHandle_t temp_qc;
-
-QueueHandle_t ReportData_Queue;
-
-ReportData_Item ADC_report;
-*/
-
+#include "globals.h"
 
 extern void Task_Simple_ADC0_Ch0( void *pvParameters ) {
-
-	temp_qc = xQueueCreate(5, sizeof(float));
-
-	ReportData_Queue = xQueueCreate( 10, sizeof( ReportData_Item ) );
-
 	//
 	//	Measured voltage value
 	//

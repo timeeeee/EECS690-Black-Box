@@ -28,6 +28,19 @@ extern void Task_Simple_ADC0_Ch0( void *pvParameters );
 extern void Task_HeaterOn( void *pvParameters );
 extern void Task_ReportData( void *pvParameters );
 
+typedef struct ReportData_Item {
+uint32_t TimeStamp;
+uint32_t ReportName;
+uint32_t ReportValue_0;
+uint32_t ReportValue_1; } ReportData_Item;
+
+// Define globals
+float set_temp = 30;
+float OnTime_mS = 0;
+QueueHandle_t temp_qc = xQueueCreate(5, sizeof(float));
+QueueHandle_t ReportData_Queue = xQueueCreate( 10, sizeof( ReportData_Item ) );
+
+
 int main( void ) {
 
 	uint32_t	Status;
