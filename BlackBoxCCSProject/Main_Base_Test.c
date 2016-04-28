@@ -1,4 +1,4 @@
-/*
+/**
  * main.c
  */
 
@@ -35,36 +35,27 @@ int main( void ) {
 	Status = Processor_Initialization();
 	Status = UART_Initialization();
 
-	//
-	//	Create a task to blink LED
-	//
+
+	///	Create a task to blink LED
 	xTaskCreate( Task_Blink_LED_D1, "Blinky", 128, NULL, 1, NULL );
 
-	//
-	//	Create a task to report SysTickCount
-	//
+
+	///	Create a task to report SysTickCount
 	xTaskCreate( Task_ReportTime, "ReportTime", 512, NULL, 1, NULL );
 
-	//
-	//	Create task to sample ADC0_Ch0
-	//
+	///	Create task to sample ADC0_Ch0
 	xTaskCreate( Task_Simple_ADC0_Ch0, "ADC0_Ch0", 512, NULL, 1, NULL );
 
-	//
-	//	Create task to turn-on the HeaterOn_H
-	//
+	///	Create task to turn-on the HeaterOn_H
 	xTaskCreate( Task_HeaterOn, "HeaterOn", 512, NULL, 1, NULL );
 
-	//
-	//
-	//
 	xTaskCreate( Task_ReportData, "ReportData", 512, NULL, 1, NULL );
 
-//	puts  ("Hello, world!" );
+	///	puts  ("Hello, world!" );
 
-	//
-	//	Start FreeRTOS Task Scheduler
-	//
+
+	///	Start FreeRTOS Task Scheduler
+
 	vTaskStartScheduler();
 
 	while ( 1 ) {
