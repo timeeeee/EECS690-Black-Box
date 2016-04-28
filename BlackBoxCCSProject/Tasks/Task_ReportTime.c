@@ -1,4 +1,4 @@
-/*--Task_ReportTime.c
+/**--Task_ReportTime.c
  *
  *  Author:			Gary J. Minden
  *	Organization:	KU/EECS/EECS 388
@@ -19,16 +19,16 @@
 
 #include	"stdio.h"
 
-#include	"globals.h"
+
 
 extern void Task_ReportTime( void *pvParameters ) {
 
 	//
-	//	No set-up necessary
+	///	No set-up necessary
 	//
 
 	//
-	//	Enter task loop
+	///	Enter task loop
 	//
 	while ( 1 ) {
 

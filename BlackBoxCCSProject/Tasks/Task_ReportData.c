@@ -1,4 +1,4 @@
-/*--Task_ReportData.c
+/**--Task_ReportData.c
  *
  * Author:! ! ! Gary J. Minden
  * Organization:!! KU/EECS/EECS 690
@@ -24,7 +24,7 @@
 #include "globals.h"
 
 //
-// Define the ReportData Task
+/// Define the ReportData Task
 //
 
 extern void Task_ReportData( void *pvParameters ) {
@@ -49,5 +49,5 @@ extern void Task_ReportData( void *pvParameters ) {
 			theReport.ReportValue_0, theReport.ReportValue_1 );
 		}
 
-	}	
+	}
 }
