@@ -15,7 +15,6 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
-
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
