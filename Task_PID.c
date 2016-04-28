@@ -42,8 +42,12 @@ one step.
 */
 int skip_derivative_flag = 1;
 
-// Change of time since previous step
-float dt = 1;
+// Previous tick count (used to find time since last loop)
+TickType_t tick_count;
+TickType_t prev_tick_count = 0;
+
+// Time since last loop
+float dt;
 
 extern void Task_PID(void *pvParameters)
 {
@@ -56,10 +60,16 @@ extern void Task_PID(void *pvParameters)
     //     Integral: Ki * integral of error so far
     //     Derivative: Kd * rate of change of error
 
+    // Get time since last 
+    tick_count = xTaskGetTickCount();
+    dt = tick_count - prev_tick_count;
+    prev_tick_count = tick_count;
+    
+    
     // Get current temp from queue and calculate error
     error = 0;
     if (temp_qc != 0) {
-      if (xQueueRecieve(temp_qc, &current_temp, (TickType_t) 10)) {
+      if (xQueuePeek(temp_qc, (void *) &current_temp, (TickType_t) 10)) {
 	error = temp_set - current_temp;
       }
     }
@@ -72,10 +82,9 @@ extern void Task_PID(void *pvParameters)
     pid_out += Ki * integral;
 
     // Update derivative part
-    // Wikipedia indicates this is highly prone to noise- we may want to:
-    //   Skip it altogether (sounds like this still gives ok results)
-    //   Use moving-window average as a low-pass filter
-    
+    // If a setting has just changed we'll want to skip this for one step.
+    // If skip_derivative_flag is set, skip a step and set the flag back to 0.
+    // Otherwise, calculate derivative from this and previous error.
     if (skip_derivative_flag == 1) {
       skip_derivative_flag = 0;
     } else {
