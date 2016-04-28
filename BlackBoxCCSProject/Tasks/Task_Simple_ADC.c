@@ -23,7 +23,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdarg.h>
-#include <Tasks/globals.h>
 
 #include "driverlib/sysctl.h"
 #include "driverlib/adc.h"
@@ -33,10 +32,10 @@
 
 #include "stdio.h"
 
-#include "Task_ReportData.h"
-
 #include "queue.h"
 #include "globals.h"
+
+ReportData_Item ADC_report;
 
 extern void Task_Simple_ADC0_Ch0( void *pvParameters ) {
 	//

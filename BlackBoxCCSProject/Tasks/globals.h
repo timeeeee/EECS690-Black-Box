@@ -21,4 +21,6 @@ uint32_t ReportName;
 uint32_t ReportValue_0;
 uint32_t ReportValue_1; } ReportData_Item;
 
+extern volatile uint32_t xPortSysTickCount;
+
 #endif /* TASKS_GLOBALS_H_ */

@@ -7,8 +7,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdarg.h>
-#include <Tasks/globals.h>
-
 #include "driverlib/sysctl.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/gpio.h"
