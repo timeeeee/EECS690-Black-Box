@@ -1,4 +1,4 @@
-/*--Task_ReportData.c
+/**--Task_ReportData.c
  *
  * Author:! ! ! Gary J. Minden
  * Organization:!! KU/EECS/EECS 690
@@ -30,17 +30,17 @@
 extern volatile uint32_t xPortSysTickCount;
 
 //
-// Define the ReportData Task
+/// Define the ReportData Task
 //
 ReportData_Item theReport;
 BaseType_t queuestatus;
 
 //
-// Insure UARTStdio is initialized
+/// Insure UARTStdio is initialized
 //
 //UART_Initialization();
 //
-// Define ReportData_Queue
+/// Define ReportData_Queue
 //
 
 	while ( 1 ) {
@@ -56,5 +56,5 @@ BaseType_t queuestatus;
 			theReport.ReportValue_0, theReport.ReportValue_1 );
 		}
 
-	}	
+	}
 }

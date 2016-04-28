@@ -1,4 +1,4 @@
-/*--Task_ReportTime.c
+/**--Task_ReportTime.c
  *
  *  Author:			Gary J. Minden
  *	Organization:	KU/EECS/EECS 388
@@ -20,18 +20,18 @@
 #include	"stdio.h"
 
 //
-//	Reference SysTickCount
+///	Reference SysTickCount
 //
 extern volatile uint32_t xPortSysTickCount;
 
 extern void Task_ReportTime( void *pvParameters ) {
 
 	//
-	//	No set-up necessary
+	///	No set-up necessary
 	//
 
 	//
-	//	Enter task loop
+	///	Enter task loop
 	//
 	while ( 1 ) {
 

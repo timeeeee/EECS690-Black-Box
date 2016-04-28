@@ -34,7 +34,7 @@ uint32_t ReportName;
 uint32_t ReportValue_0;
 uint32_t ReportValue_1; } ReportData_Item;
 
-// Define globals
+/// Define globals
 float set_temp = 30;
 float OnTime_mS = 0;
 QueueHandle_t temp_qc = xQueueCreate(5, sizeof(float));

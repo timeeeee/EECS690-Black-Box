@@ -40,18 +40,18 @@
 
 extern void Task_Simple_ADC0_Ch0( void *pvParameters ) {
 	//
-	//	Measured voltage value
+	///	Measured voltage value
 	//
 	uint32_t	ADC_Value;
 
 	//
-	//	Enable (power-on) ADC0
+	///	Enable (power-on) ADC0
 	//
 	SysCtlPeripheralEnable( SYSCTL_PERIPH_ADC0 );
 
 	//
-	// Enable the first sample sequencer to capture the value of channel 0 when
-	// the processor trigger occurs.
+	/** Enable the first sample sequencer to capture the value of channel 0 when
+	 the processor trigger occurs.*/
 	//
 	ADCSequenceConfigure(ADC0_BASE, 0, ADC_TRIGGER_PROCESSOR, 0);
 
@@ -65,24 +65,24 @@ extern void Task_Simple_ADC0_Ch0( void *pvParameters ) {
 	while ( 1 ) {
 
 		//
-		// Trigger the sample sequence.
+		/// Trigger the sample sequence.
 		//
 		ADCProcessorTrigger(ADC0_BASE, 0);
 
 		//
-		// Wait until the sample sequence has completed.
+		/// Wait until the sample sequence has completed.
 		//
 		while( !ADCIntStatus( ADC0_BASE, 0, false )) {
 		}
 
 		//
-		// Read the value from the ADC.
+		/// Read the value from the ADC.
 		//
 		ADCSequenceDataGet(ADC0_BASE, 0, &ADC_Value);
 		ADCIntClear( ADC0_BASE, 0 );
 
 		//
-		//	Print ADC_Value
+		///	Print ADC_Value
 		//
 		ADC_report.TimeStamp = xPortSysTickCount;
 		ADC_report.ReportName = 0;
@@ -99,7 +99,7 @@ extern void Task_Simple_ADC0_Ch0( void *pvParameters ) {
 		printf("%f\n", 91.93 - 30.45*myf2);
 
 		//
-		//	Delay one (1) second.
+		///	Delay one (1) second.
 		//
 		vTaskDelay( (1000 * configTICK_RATE_HZ) / 1000 );
 	}
