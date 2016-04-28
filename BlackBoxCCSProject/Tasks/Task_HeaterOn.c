@@ -31,9 +31,11 @@
 
 #include	"stdio.h"
 
+#include	"globals.h"
+
 #define		TimeBase_mS		1000
-#define		OnTime_mS		500
-#define		OffTime_mS		( TimeBase_mS - OnTime_mS )
+
+unsigned int OffTime_mS;
 
 extern void Task_HeaterOn( void *pvParameters ) {
 
@@ -62,6 +64,8 @@ extern void Task_HeaterOn( void *pvParameters ) {
 						GPIO_PIN_0, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD );
 
 	while ( 1 ) {
+
+	  OffTime_mS = (TimeBase_mS - OnTime_mS);
 
         //
         // Set HeaterOn_H and D2 for OnTime_mS.
