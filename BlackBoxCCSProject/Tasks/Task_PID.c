@@ -20,12 +20,6 @@
 #include "globals.h"
 
 
-//extern QueueHandle_t temp_qc;
-/*
-extern float set_temp;
-extern float OnTime_mS;
-*/
-
 /*
 PID Parameters
 (If we want to change these while the board is running they'll need to be declared somewhere else and declared here using extern)
