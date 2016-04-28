@@ -23,10 +23,16 @@
 #include "inc/hw_types.h"
 #include "inc/hw_uart.h"
 
-//
-// Define the ReportData Queue
-//
-//extern uint32_t UART_Initialization();
+#include "globals.h"
+
+typedef struct ReportData_Item {
+uint32_t TimeStamp;
+uint32_t ReportName;
+uint32_t ReportValue_0;
+uint32_t ReportValue_1; } ReportData_Item;
+
+extern volatile uint32_t xPortSysTickCount;
+
 //
 // Define the ReportData Task
 //
