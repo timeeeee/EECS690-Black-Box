@@ -35,6 +35,9 @@
 
 #include "Task_ReportData.h"
 
+#include "queue.h"
+#include "global.h"
+
 //
 //	Gloabal subroutines and variables
 //
