@@ -70,6 +70,7 @@ extern void Task_PID(void *pvParameters)
     error = 0;
     if (temp_qc != 0) {
       if (xQueuePeek(temp_qc, (void *) &current_temp, (TickType_t) 10)) {
+	printf("PID got temperature %f from queue\n", current_temp);
 	error = temp_set - current_temp;
       }
     }
@@ -99,10 +100,13 @@ extern void Task_PID(void *pvParameters)
     // If positive, set time-on to pid_out, but clamp at 1000 max
     if (pid_out < 0) {
       TimeOn_mS = 0;
+      printf("PID set heater all the way off\n");
     } else if (pid_out > 1000) {
       TimeOn_mS = 1000;
+      printf("PID set heater all the way on\n");
     } else {
       TimeOn_mS = pid_out;
+      printf("PID set heater to %i / 1000\n", TimeOn_mS);
     }
 
     vTaskDelay((1000 * configTICK_RATE_HZ) / 1000));
