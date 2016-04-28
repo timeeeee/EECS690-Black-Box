@@ -25,10 +25,6 @@
 
 #include "globals.h"
 
-
-
-extern volatile uint32_t xPortSysTickCount;
-
 //
 // Define the ReportData Task
 //

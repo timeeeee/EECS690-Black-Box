@@ -19,10 +19,7 @@
 
 #include	"stdio.h"
 
-//
-//	Reference SysTickCount
-//
-extern volatile uint32_t xPortSysTickCount;
+#include	"globals.h"
 
 extern void Task_ReportTime( void *pvParameters ) {
 

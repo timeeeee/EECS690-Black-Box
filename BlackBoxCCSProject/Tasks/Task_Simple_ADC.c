@@ -35,6 +35,8 @@
 #include "queue.h"
 #include "globals.h"
 
+ReportData_Item ADC_report;
+
 extern void Task_Simple_ADC0_Ch0( void *pvParameters ) {
 	//
 	//	Measured voltage value
