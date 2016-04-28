@@ -1,2 +1,5 @@
 #object files
 *.o
+
+#temp files
+*~
