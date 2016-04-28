@@ -23,7 +23,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdarg.h>
-#include <Tasks/globals.h>
 
 #include "driverlib/sysctl.h"
 #include "driverlib/adc.h"
@@ -32,8 +31,6 @@
 #include "task.h"
 
 #include "stdio.h"
-
-#include "Task_ReportData.h"
 
 #include "queue.h"
 #include "globals.h"
