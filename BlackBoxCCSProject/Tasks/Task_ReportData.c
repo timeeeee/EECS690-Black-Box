@@ -11,9 +11,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdarg.h>
-#include <Tasks/globals.h>
 #include "Drivers/uartstdio.h"
-#include "Tasks/Task_ReportData.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
