@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdarg.h>
+#include <Tasks/globals.h>
 	 
 #include "driverlib/sysctl.h"
 #include "driverlib/pin_map.h"
@@ -16,11 +17,14 @@
 #include "task.h"
 #include "queue.h"
 
-#include "Task_PID.h"
+#include "globals.h"
 
-extern QueueHandle_t temp_qc;
+
+//extern QueueHandle_t temp_qc;
+/*
 extern float set_temp;
 extern float OnTime_mS;
+*/
 
 /*
 PID Parameters
