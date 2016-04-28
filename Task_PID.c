@@ -72,6 +72,8 @@ extern void Task_PID(void *pvParameters)
       if (xQueuePeek(temp_qc, (void *) &current_temp, (TickType_t) 10)) {
 	printf("PID got temperature %f from queue\n", current_temp);
 	error = temp_set - current_temp;
+      } else {
+	printf("PID couldn't get temperature from queue\n");
       }
     }
 
