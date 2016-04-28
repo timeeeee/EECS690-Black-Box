@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdarg.h>
+#include <Tasks/globals.h>
 #include "Drivers/uartstdio.h"
 #include "Tasks/Task_ReportData.h"
 #include "FreeRTOS.h"
@@ -21,7 +22,6 @@
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
 #include "inc/hw_uart.h"
-#include "Task_Simple_ADC.h"
 
 //
 // Define the ReportData Queue
