@@ -25,16 +25,15 @@
 //
 /// Define the ReportData Task
 //
-ReportData_Item theReport;
-BaseType_t queuestatus;
 
-//
-/// Insure UARTStdio is initialized
-//
-//UART_Initialization();
-//
-/// Define ReportData_Queue
-//
+extern void Task_ReportData( void *pvParameters ) {
+  ReportData_Item theReport;
+  BaseType_t queuestatus;
+
+  //
+  // Insure UARTStdio is initialized
+  //
+  //UART_Initialization();
 
 	while ( 1 ) {
 	 //
