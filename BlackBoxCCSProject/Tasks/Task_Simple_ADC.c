@@ -32,56 +32,57 @@
 
 #include "stdio.h"
 
-#include "queue.h"
 #include "globals.h"
 
 ReportData_Item ADC_report;
 
 extern void Task_Simple_ADC0_Ch0( void *pvParameters ) {
+
+
+
 	//
-	///	Measured voltage value
+	//	Measured voltage value
 	//
 	uint32_t	ADC_Value;
 
 	//
-	///	Enable (power-on) ADC0
+	//	Enable (power-on) ADC0
 	//
 	SysCtlPeripheralEnable( SYSCTL_PERIPH_ADC0 );
 
 	//
-	/** Enable the first sample sequencer to capture the value of channel 0 when
-	 the processor trigger occurs.*/
+	// Enable the first sample sequencer to capture the value of channel 0 when
+	// the processor trigger occurs.
 	//
 	ADCSequenceConfigure(ADC0_BASE, 0, ADC_TRIGGER_PROCESSOR, 0);
 
-	ADCSequenceStepConfigure( ADC0_BASE, 0, 0,
-								ADC_CTL_IE | ADC_CTL_END | ADC_CTL_CH0 );
+	ADCSequenceStepConfigure( ADC0_BASE, 0, 0,ADC_CTL_IE | ADC_CTL_END | ADC_CTL_CH0 );
 
 	ADCSequenceEnable( ADC0_BASE, 0 );
-
-//	printf( ">>>>ADC Initialized.\n");
 
 	while ( 1 ) {
 
 		//
-		/// Trigger the sample sequence.
+		// Trigger the sample sequence.
 		//
 		ADCProcessorTrigger(ADC0_BASE, 0);
 
 		//
-		/// Wait until the sample sequence has completed.
+		// Wait until the sample sequence has completed.
 		//
 		while( !ADCIntStatus( ADC0_BASE, 0, false )) {
 		}
 
 		//
-		/// Read the value from the ADC.
+		// Read the value from the ADC.
 		//
 		ADCSequenceDataGet(ADC0_BASE, 0, &ADC_Value);
 		ADCIntClear( ADC0_BASE, 0 );
 
+
+
 		//
-		///	Print ADC_Value
+		//	Print ADC_Value
 		//
 		ADC_report.TimeStamp = xPortSysTickCount;
 		ADC_report.ReportName = 0;
@@ -89,16 +90,16 @@ extern void Task_Simple_ADC0_Ch0( void *pvParameters ) {
 		ADC_report.ReportValue_1 = 0;
 		xQueueSend( ReportData_Queue, &ADC_report, 0 );
 
-		float myf2 = 0.0;
-		float myf = (ADC_Value/4095.0)*3.3;
-		xQueueSend( temp_qc, &myf,0);
+		float myf_celcius =  91.93 - 30.45*(ADC_Value/4095.0)*3.3;
+		xQueueSend( temp_qc, &myf_celcius,0);
+
+		printf ("adc got temp %f\n", myf_celcius);
 
 		//printf( ">>ADC_Value: %f\n>>INT: %d\n", myf,ADC_Value);
-		xQueueReceive(temp_qc, (void*)&myf2, 10);
-		printf("%f\n", 91.93 - 30.45*myf2);
+		//if (!temp_qc) printf("queue not initialized\n");
 
 		//
-		///	Delay one (1) second.
+		//	Delay one (1) second.
 		//
 		vTaskDelay( (1000 * configTICK_RATE_HZ) / 1000 );
 	}

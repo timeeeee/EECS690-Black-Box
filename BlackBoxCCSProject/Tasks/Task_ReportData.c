@@ -1,4 +1,4 @@
-/**--Task_ReportData.c
+/*--Task_ReportData.c
  *
  * Author:! ! ! Gary J. Minden
  * Organization:!! KU/EECS/EECS 690
@@ -15,26 +15,32 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
+
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
 #include "inc/hw_uart.h"
 
-#include "globals.h"
+#include "Tasks/globals.h"
+
+
+
+extern volatile uint32_t xPortSysTickCount;
 
 //
-/// Define the ReportData Task
+// Define the ReportData Task
 //
+ReportData_Item theReport;
+BaseType_t queuestatus;
 
-extern void Task_ReportData( void *pvParameters ) {
-  ReportData_Item theReport;
-  BaseType_t queuestatus;
-
-  //
-  // Insure UARTStdio is initialized
-  //
-  //UART_Initialization();
-
+//
+// Insure UARTStdio is initialized
+//
+//UART_Initialization();
+//
+// Define ReportData_Queue
+//
+extern void Task_ReportData ( void *pvParameters ) {
 	while ( 1 ) {
 	 //
 	 // Try to read ReportItem from ReportData_Queue.
@@ -47,6 +53,6 @@ extern void Task_ReportData( void *pvParameters ) {
 			theReport.TimeStamp, theReport.ReportName,
 			theReport.ReportValue_0, theReport.ReportValue_1 );
 		}
-
+		vTaskDelay( (1000 * configTICK_RATE_HZ) / 1000 );
 	}
 }

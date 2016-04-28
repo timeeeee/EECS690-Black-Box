@@ -1,12 +1,12 @@
-/**--Task_Blinky.c
- 	*
- 	*  Author:			Gary J. Minden
- 	*	Organization:	KU/EECS/EECS 388
- 	*  Date:			February 22, 2016
- 	*
- 	*  Description:	Blinks LED D1 on Tiva TMC41294 Evaluation board
- 	*
- 	*/
+/*--Task_Blinky.c
+ *
+ *  Author:			Gary J. Minden
+ *	Organization:	KU/EECS/EECS 388
+ *  Date:			February 22, 2016
+ *
+ *  Description:	Blinks LED D1 on Tiva TMC41294 Evaluation board
+ *
+ */
 
 #include	"inc/hw_ints.h"
 #include	"inc/hw_memmap.h"
@@ -30,12 +30,12 @@ extern void Task_Blink_LED_D1( void *pvParameters ) {
 	uint32_t	LED_Data;
 
     //
-    /// Enable the GPIO Port N.
+    // Enable the GPIO Port N.
     //
     SysCtlPeripheralEnable( SYSCTL_PERIPH_GPION );
 
 	//
-    /// Configure GPIO_N to drive the Status LED.
+    // Configure GPIO_N to drive the Status LED.
     //
     GPIOPinTypeGPIOOutput( GPIO_PORTN_BASE, GPIO_PIN_1 );
     GPIOPadConfigSet( GPIO_PORTN_BASE,
@@ -43,7 +43,7 @@ extern void Task_Blink_LED_D1( void *pvParameters ) {
 
 	while ( 1 ) {
         //
-        /// Toggle the LED.
+        // Toggle the LED.
         //
 		LED_Data = GPIOPinRead( GPIO_PORTN_BASE, GPIO_PIN_1 );
 		LED_Data = LED_Data ^ 0x02;
@@ -52,3 +52,6 @@ extern void Task_Blink_LED_D1( void *pvParameters ) {
 		vTaskDelay( ( 500 * configTICK_RATE_HZ ) / 10000 );
 	}
 }
+
+
+
