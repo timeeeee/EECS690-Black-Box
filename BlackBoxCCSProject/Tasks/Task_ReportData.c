@@ -25,18 +25,13 @@
 
 #include "globals.h"
 
-typedef struct ReportData_Item {
-uint32_t TimeStamp;
-uint32_t ReportName;
-uint32_t ReportValue_0;
-uint32_t ReportValue_1; } ReportData_Item;
+
 
 extern volatile uint32_t xPortSysTickCount;
 
 //
 // Define the ReportData Task
 //
-extern void Task_ReportData( void *pvParameters ) {
 ReportData_Item theReport;
 BaseType_t queuestatus;
 

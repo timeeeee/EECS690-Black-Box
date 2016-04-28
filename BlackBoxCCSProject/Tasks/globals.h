@@ -15,5 +15,10 @@ extern QueueHandle_t ReportData_Queue;
 extern float set_temp;
 extern float OnTime_mS;
 
+typedef struct ReportData_Item {
+uint32_t TimeStamp;
+uint32_t ReportName;
+uint32_t ReportValue_0;
+uint32_t ReportValue_1; } ReportData_Item;
 
 #endif /* TASKS_GLOBALS_H_ */
