@@ -32,15 +32,16 @@ extern void Task_ReportData( void *pvParameters );
 extern void Task_PID( void *pvParameters );
 
 // Define globals
-float set_temp = 30;
+float set_temp = 33;
 float OnTime_mS = 0;
 QueueHandle_t temp_qc;
 QueueHandle_t ReportData_Queue;
 
-
 int main( void ) {
 
-	uint32_t	Status;
+	printf("time, voltage, celcious, Error, Derivative of Err, Integral of Error, time on \n");
+
+	uint32_t Status;
 
 	temp_qc = xQueueCreate(5, sizeof(float));
 	ReportData_Queue = xQueueCreate( 10, sizeof( ReportData_Item ) );

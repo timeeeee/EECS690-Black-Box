@@ -24,9 +24,9 @@
 PID Parameters
 (If we want to change these while the board is running they'll need to be declared somewhere else and declared here using extern)
 */
-float Kp = 20;
-float Ki = 20;
-float Kd = 1;
+float Kp = 800;
+float Ki = 3;
+float Kd = 0;
 
 float pid_out = 0;
 
@@ -34,6 +34,8 @@ float current_temp;
 float error;  // Most recent calculated error
 float prev_error = 0;  // Previous error
 float integral = 0;  // Sum of all error so far
+float integral_max;
+float integral_decay = .99;
 
 /*
 If we have just turned on the board or a setting changes, the derivative may go
@@ -50,6 +52,7 @@ TickType_t prev_tick_count = 0;
 float dt;
 
 extern void Task_PID(void *pvParameters){
+	integral_max = 1000.0 / Ki;  // Integral maximum should be just enough to keep the heater at 100%.
   while (true) {
     // PID will take as input current temperature and target
     // temperature (temp_set).
@@ -69,10 +72,9 @@ extern void Task_PID(void *pvParameters){
     error = 0;
     if (temp_qc != 0) {
       if (xQueueReceive(temp_qc, (void *) &current_temp, (TickType_t) 10)) {
-	printf("PID got temperature %f from queue\n", current_temp);
-	error = set_temp - current_temp;
+		error = set_temp - current_temp;
       } else {
-	printf("PID couldn't get temperature from queue\n");
+    	  printf("PID couldn't get temperature from queue\n");
       }
     }
 
@@ -81,8 +83,11 @@ extern void Task_PID(void *pvParameters){
 
     // Update integral and add integral part
     integral += (error + prev_error) / 2 * dt;
+    if (integral > integral_max) integral = integral_max;
+    if (integral < -integral_max) integral = -integral_max;
+    // integral *= integral_decay;
     pid_out += Ki * integral;
-    printf("integral of error so far: %f\n", integral);
+    //printf("integral of error so far: %f\n", integral);
 
     // Update derivative part
     // If a setting has just changed we'll want to skip this for one step.
@@ -91,10 +96,12 @@ extern void Task_PID(void *pvParameters){
     if (skip_derivative_flag == 1) {
       skip_derivative_flag = 0;
     } else {
-      printf("current error: %f\n", error);
+      printf(", %f", error);
       pid_out += Kd * (error - prev_error) / dt;
-      printf("derivative of error this time step: %f\n", Kd * (error - prev_error) / dt);
+      printf(", %f", Kd * (error - prev_error) / dt);
     }
+
+    printf(", %f", integral);
 
     // Save this error for next step
     prev_error = error;
@@ -104,14 +111,12 @@ extern void Task_PID(void *pvParameters){
     // If positive, set time-on to pid_out, but clamp at 1000 max
     if (pid_out < 0) {
       OnTime_mS = 0;
-      printf("PID set heater all the way off\n");
     } else if (pid_out > 1000) {
       OnTime_mS = 1000;
-      printf("PID set heater all the way on\n");
     } else {
       OnTime_mS = pid_out;
-      printf("PID set heater to %f / 1000\n", OnTime_mS);
     }
+    printf(", %f\n", OnTime_mS);
 
     vTaskDelay((1000 * configTICK_RATE_HZ) / 1000);
   }

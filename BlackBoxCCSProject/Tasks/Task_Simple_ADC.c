@@ -34,6 +34,8 @@
 
 #include "globals.h"
 
+#include <ctime>
+
 ReportData_Item ADC_report;
 
 extern void Task_Simple_ADC0_Ch0( void *pvParameters ) {
@@ -59,6 +61,7 @@ extern void Task_Simple_ADC0_Ch0( void *pvParameters ) {
 	ADCSequenceStepConfigure( ADC0_BASE, 0, 0,ADC_CTL_IE | ADC_CTL_END | ADC_CTL_CH0 );
 
 	ADCSequenceEnable( ADC0_BASE, 0 );
+	int time = 0;
 
 	while ( 1 ) {
 
@@ -90,11 +93,12 @@ extern void Task_Simple_ADC0_Ch0( void *pvParameters ) {
 		ADC_report.ReportValue_1 = 0;
 		xQueueSend( ReportData_Queue, &ADC_report, 0 );
 
-		float myf_celcius =  91.93 - 30.45*(ADC_Value/4095.0)*3.3;
+		float AD_volt = (ADC_Value/4095.0)*3.3;
+		float myf_celcius =  91.93 - 30.45*AD_volt;
 		xQueueSend( temp_qc, &myf_celcius,0);
 
-		printf ("adc got temp %f\n", myf_celcius);
-
+		printf ("%d , %f , %f ", time, AD_volt  ,myf_celcius);
+		time++;
 		//printf( ">>ADC_Value: %f\n>>INT: %d\n", myf,ADC_Value);
 		//if (!temp_qc) printf("queue not initialized\n");
 
