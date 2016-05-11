@@ -1,0 +1,11 @@
+To do our testing, we printed debugging information with the inputs, outputs, and any intermediate steps from each module. Because we combined modules with similar tasks into more comprehensive modules, the communication between our modules was simple, and our tests could focus on teh performance of the individual modules. Our basic process was to do basic sanity checking for the inputs and outputs of each module, and then move on to more specific verification.
+
+Our most basic sanity check was a Blinky task that switched an LED on and off at regular intervals, giving us a basic indicator that our program was running on the board.
+
+To verify that our heater module was functioning correctly, we could watch the amperage pulled through the power supply. When the heater was switched off entirely, no current was drawn. When it was on all the way, a steady current was drawn. When we set a duty cycle, the amperage would change, seeming to cycle about once every second. If it had behaved unpredictably, we would have used an oscilloscope to get a more concrete view of what was happening, but this turned out not to be necessary.
+
+To test our PID controller module, we used the printf function to print a number of values to the computer. We printed the temperature received from the ADC task, the current error, the integral of error calculated so far, the derivative of error calculated between the current and previous time steps, and finally the on-time calculated and sent to the heater module. This allowed us to verify that we were getting the current temperature from the ADC correctly, and to perform the PID calculations ourselves to compare them to the actual value being sent to the heater.
+
+We tested our UART module by sending the same information using UART as we did using printf and comparing the results.
+
+To test our ADC module, we printed the value from the controller's ADC, the calculated voltage, and the calculated temperature. This allowed us to again check the calculations ourselves, and to compare the calculated temperature to the temperature of the box, measured with a thermometer.

@@ -1,0 +1,23 @@
+Our experiments served two purposes: to further verify that our modules were working and integrated correctly in a variety of conditions, and to tune our PID parameters. As with testing, we printed debug messages with the internal state of our program, so that when the oven behaved unexpectedly we could easily see why.
+
+[p20_i20_d1_temp29.svg]
+
+We started with arbitrary PID parameters Kp = 20, Ki = 20, and Kd = 1, and the target temperature 29 degrees. The oven overshot the target temperature by more than four degrees, before cooling down to almost room temperature and repeating the process. Our debug logs showed that this was because the integral of the error would become very large before we hit the target temperature, and take a long time to shrink back down tto zero. We used early experiments like this one as an opportunity to check our temperature measurements using a thermometer across a wide range of temperatures.
+
+[p500_i0_d0_temp29.svg]
+
+We used a rough approximation of the Ziegler-Nichols method to tune our PID parameters. We set the Ki and Kd parameters to zero, and raised the Kp parameter until the temperature was clearly oscillating. At Kp = 500 some oscillation is visible.
+
+[p800_i10_d0_temp29.svg]
+
+Because our errors were in the range of a few degrees, and the integral of the error would reach hundreds of degrees, we started with a small Ki = 10. We could see again the cycle from room temperature to multiple degrees past the set point and back, so we used a rough binary search to find a Ki lower than this.
+
+[p800_i3_d0_temp29.svg]
+
+[p800_i2_d0_temp29.svg]
+
+With Ki = 2 the controller was slow to center on the target temperature, so we chose Ki = 3. Because we didn't smooth out our temperature measurements, the derivative calculated by the PID module was erratic, so we chose to leave Kd at zero.
+
+[p800_i3_d0_temp33.svg]
+
+For our last experiment we used the same PID parameters (Kp = 800, Ki = 3, Kd = 0) with a target temperature of 33, and found that the parameters still worked well. Within 10 minutes the temperature was oscillating but clearly centered around 33 degrees, and within a half hour (after about three oscillations) the temperature was steady.
